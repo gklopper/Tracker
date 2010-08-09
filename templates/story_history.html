@@ -1,0 +1,33 @@
+<html>
+<head>
+    <title>Story management</title>
+</head>
+<body>
+    <form action="/admin/story/{{story_id}}" method=""POST">
+
+        <label for="date">Date</label>
+        <select id="date" name="date">
+
+            {% for date in dates %}
+
+            <option value="{{date}}">{{date|date:"d M Y"}}</option>
+
+            {% endfor %}
+        </select>
+
+
+        <label for="hours">Hours</label>
+        <select id="hours" name="hours">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7" selected>7</option>
+        </select>
+        <label for="comment">Comment</label><input id="comment" name="comment"/>
+        <input type="submit" value="Save"/>
+    </form>
+</body>
+</html>
