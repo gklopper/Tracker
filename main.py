@@ -5,6 +5,7 @@ from google.appengine.ext import db
 from google.appengine.api import users
 import datetime
 import logging
+import re
 
 import os
 
@@ -21,12 +22,25 @@ class StoryLine(db.Model):
     date = db.DateProperty(required=True)
     comment = db.StringProperty()
     user = db.UserProperty()
+    hours = db.IntegerProperty(required=True)
 
 
 class StoryHandler(webapp.RequestHandler):
 
     def post(self, story_id):
-        story = new StoryLine()
+
+        date_match = re.search(r'(\d\d\d\d)-(\d\d)-(\d\d)', self.request.get('date'))
+        year = int(date_match.group(1))
+        month = int(date_match.group(2))
+        day = int(date_match.group(3))
+        date = datetime.date(year, month, day)
+        hours = int(self.request.get('hours'))
+        comment = self.request.get('comment')
+        
+        story = StoryLine(story_id=story_id, comment=comment, date=date, user=users.get_current_user(), hours=hours)
+        story.save()
+
+        self.redirect('/admin/story/' + story_id)
 
     def get(self, story_id):
         stories = StoryLine.gql('WHERE story_id = :1 ORDER BY date', story_id).fetch(100, 0)

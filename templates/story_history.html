@@ -3,7 +3,7 @@
     <title>Story management</title>
 </head>
 <body>
-    <form action="/admin/story/{{story_id}}" method=""POST">
+    <form action="/admin/story/{{story_id}}" method="POST">
 
         <label for="date">Date</label>
         <select id="date" name="date">
@@ -29,5 +29,12 @@
         <label for="comment">Comment</label><input id="comment" name="comment"/>
         <input type="submit" value="Save"/>
     </form>
+<div>
+    <ol>
+    {% for story in stories %}
+        <li>{{story.date|date:"d M Y"}} : {{story.hours}} hours {%if story.comment%}: {{story.comment}}{%endif%}</li>
+    {% endfor %}
+    </ol>
+</div>
 </body>
 </html>
