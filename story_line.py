@@ -1,12 +1,11 @@
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
-from google.appengine.ext.webapp import template
 from google.appengine.ext import db
 from google.appengine.api import users
 import datetime
 import re
-
-import os
+import appengineutils
+from story import Story
 
 
 class StoryLine(db.Model):
@@ -24,13 +23,9 @@ def last_five_days():
             date_list.append(today - datetime.timedelta(days = x))
         return date_list
 
-def render_template(response, template_name, model):
-        path = os.path.join(os.path.dirname(__file__), 'templates/' + template_name)
-        response.out.write(template.render(path, model))
 
-class StoryHandler(webapp.RequestHandler):
 
-    from __main__ import render_template
+class Handler(webapp.RequestHandler):
 
     def post(self, story_id):
 
@@ -49,6 +44,13 @@ class StoryHandler(webapp.RequestHandler):
         self.redirect('/s/' + story_id)
 
     def get(self, story_id):
+
+        story = Story.gql('WHERE story_id = :1', story_id).get()
+
+        if story is None:
+            story = Story(story_id=story_id, user = users.get_current_user(), name=story_id)
+            story.save()
+
         story_lines = StoryLine.gql('WHERE story_id = :1 ORDER BY date', story_id).fetch(100, 0)
 
         total_java_hours = 0
@@ -61,16 +63,17 @@ class StoryHandler(webapp.RequestHandler):
         java_days = float(total_java_hours) / 7
         cs_days = float(total_cs_hours) / 7
 
-        render_template(self.response, 'story_history.html', {'stories': story_lines,
+        appengineutils.render_template(self.response, 'story_history.html', {'stories': story_lines,
                                                                 'story_id': story_id,
                                                                 'dates': last_five_days(),
                                                                 'total_java_hours': total_java_hours,
                                                                 'total_cs_hours' : total_cs_hours,
                                                                 'java_days': java_days,
-                                                                'cs_days': cs_days})
+                                                                'cs_days': cs_days,
+                                                                'story': story})
 
 def main():
-    application = webapp.WSGIApplication([('/s/(.*)', StoryHandler)],
+    application = webapp.WSGIApplication([('/s/(.*)', Handler)],
                                          debug=True)
     util.run_wsgi_app(application)
 

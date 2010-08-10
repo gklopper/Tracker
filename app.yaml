@@ -5,4 +5,9 @@ api_version: 1
 
 handlers:
 - url: /s/.*
-  script: main.py
+  script: story_line.py
+  login: required
+
+- url: /p/.*
+  script: story.py
+  login: required
