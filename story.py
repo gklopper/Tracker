@@ -22,7 +22,19 @@ class Handler(webapp.RequestHandler):
 
         story = Story.gql('WHERE story_id = :1', story_id).get()
 
-        appengineutils.render_template(self.response, 'story.html', {"story" : story})
+        appengineutils.render_template(self.response, 'story.html', {"story" : story,
+                                                                      "estimate_options": [0,1,2,3,4,5,6,7,8,9,10]})
+
+    def post(self, story_id):
+        story = Story.gql('WHERE story_id = :1', story_id).get()
+        story.name = self.request.get('name')
+        story.java_estimate = int(self.request.get('java_estimate'))
+        story.cs_estimate = int(self.request.get('cs_estimate'))
+
+        story.user = users.get_current_user()
+
+        story.save()
+        self.redirect('/s/' + story.story_id)
 
 
 def main():

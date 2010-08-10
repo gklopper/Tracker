@@ -64,7 +64,6 @@ class Handler(webapp.RequestHandler):
         cs_days = float(total_cs_hours) / 7
 
         appengineutils.render_template(self.response, 'story_history.html', {'stories': story_lines,
-                                                                'story_id': story_id,
                                                                 'dates': last_five_days(),
                                                                 'total_java_hours': total_java_hours,
                                                                 'total_cs_hours' : total_cs_hours,

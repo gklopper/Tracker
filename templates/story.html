@@ -2,9 +2,29 @@
 <head><title>Story editor</title></head>
 <body>
 
-<form action="story/p/{{story.story_id}}" method="post">
+<form action="/p/{{story.story_id}}" method="post">
 
-    <label for="name">Name</label><input id="name" value="{{story.name}}"/>
+    <label for="name">Name</label><input id="name" name="name" value="{{story.name}}"/>
+
+    <label for="java_estimate">Java estimate</label>
+        <select id="java_estimate" name="java_estimate">
+            {%for opt in estimate_options%}
+            <option value="{{opt}}" >{{opt}}</option>
+            {%endfor%}
+        </select>
+
+        <label for="cs_estimate">CS estimate</label>
+        <select id="cs_estimate" name="cs_estimate">
+            {%for opt in estimate_options%}
+            <option value="{{opt}}" >{{opt}}</option>
+            {%endfor%}
+        </select>
+    <input type="submit" value="update"/>
+
+    <script type="text/javascript">
+        document.getElementById('cs_estimate')[{{story.cs_estimate}}].selected = true;
+        document.getElementById('java_estimate')[{{story.java_estimate}}].selected = true;
+    </script>
 
 </form>
 
