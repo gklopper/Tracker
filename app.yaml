@@ -1,8 +1,8 @@
-application: tracker
+application: story-track
 version: 1
 runtime: python
 api_version: 1
 
 handlers:
-- url: /admin/.*
+- url: /s/.*
   script: main.py

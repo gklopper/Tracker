@@ -1,9 +1,22 @@
 <html>
 <head>
     <title>Story management</title>
+
+    <style type="text/css">
+        th, td {
+            text-align: center;
+            border-width: 1px;
+            border-style: solid; 
+        }
+        table {
+            border-style: solid;
+            border-width: 1px;
+        }
+    </style>
+
 </head>
 <body>
-    <form action="/admin/story/{{story_id}}" method="POST">
+    <form action="/s/{{story_id}}" method="POST">
 
         <label for="date">Date</label>
         <select id="date" name="date">
@@ -16,25 +29,61 @@
         </select>
 
 
-        <label for="hours">Hours</label>
-        <select id="hours" name="hours">
+        <label for="java_hours">Java Hours</label>
+        <select id="java_hours" name="java_hours">
+            <option value="0"  selected>0</option>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
             <option value="4">4</option>
             <option value="5">5</option>
             <option value="6">6</option>
-            <option value="7" selected>7</option>
+            <option value="7">7</option>
         </select>
+
+        <label for="cs_hours">CS Hours</label>
+        <select id="cs_hours" name="cs_hours">
+            <option value="0"  selected>0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+        </select>
+
         <label for="comment">Comment</label><input id="comment" name="comment"/>
         <input type="submit" value="Save"/>
     </form>
+
 <div>
-    <ol>
+    <ul>
+        <li>Java days: {{java_days|floatformat}}</li>
+        <li>CS days:  {{cs_days|floatformat}}</li>    
+    </ul>
+</div>
+
+<div>
+    <table>
+        <tr>
+            <th>Date</th><th>Java hours</th><th>CS hours</th><th>comment</th>
+        </tr>
     {% for story in stories %}
-        <li>{{story.date|date:"d M Y"}} : {{story.hours}} hours {%if story.comment%}: {{story.comment}}{%endif%}</li>
+        <tr>
+            <td>{{story.date|date:"d M Y"}}</td>
+            <td>{{story.java_hours}}</td>
+            <td>{{story.cs_hours}}</td>
+            <td>
+                {%if story.comment%}
+                    {{story.comment}}
+                {%else%}
+                    &nbsp;
+                {%endif%}
+            </td>
+        </tr>
     {% endfor %}
-    </ol>
+    </table>
 </div>
 </body>
 </html>
