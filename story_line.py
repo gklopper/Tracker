@@ -15,19 +15,6 @@ def last_five_days():
             date_list.append(today - datetime.timedelta(days = x))
         return date_list
 
-def calculate_actual_days(story_lines):
-        total_java_hours = 0
-        total_cs_hours = 0
-
-        for story_line in story_lines:
-            if not story_line.is_deleted:
-                total_java_hours += story_line.java_hours
-                total_cs_hours += story_line.cs_hours
-
-        java_days = float(total_java_hours) / 7
-        cs_days = float(total_cs_hours) / 7
-        return (java_days, cs_days)
-
 class DeleteHandler(webapp.RequestHandler):
 
     def get(self, story_id, line_id):
@@ -66,9 +53,9 @@ class Handler(webapp.RequestHandler):
         story_line.put()
         story.last_updated = story_line.date
         story.put()
-        story_lines = story.story_lines()
 
-        java_days, cs_days = calculate_actual_days(story_lines)
+        java_days = story.actual_java_days()
+        cs_days = story.actual_cs_days()
 
         if story.java_estimate > 0 and story.java_estimate < java_days:
             logging.warn("Over java estimate")
@@ -90,7 +77,8 @@ class Handler(webapp.RequestHandler):
 
         story_lines = story.story_lines()
 
-        java_days, cs_days = calculate_actual_days(story_lines)
+        java_days = story.actual_java_days()
+        cs_days = story.actual_cs_days()
 
         appengineutils.render_template(self.response, 'story_history.html', {'story_lines': story_lines,
                                                                 'dates': last_five_days(),
