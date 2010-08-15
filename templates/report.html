@@ -1,0 +1,40 @@
+<html>
+<head>
+    <title>Story report</title>
+    <style type="text/css">
+        th, td {
+            text-align: center;
+            border-width: 1px;
+            border-style: solid;
+        }
+        table {
+            border-style: solid;
+            border-width: 1px;
+        }
+        sup {
+            font-size: 10px;
+            font-weight:normal;
+        }
+    </style>
+</head>
+<body>
+    <h1>Story report</h1>
+
+    <table>
+        <tr>
+            <th>Story</th><th>Actual Java</th><th>Actual CS</th>
+        </tr>
+
+        {%for story in stories%}
+            <tr>
+                <th>
+                    <a href="/s/{{story.story_id}}">{{story.name}}</a>
+                    <sup><a href="http://www.pivotaltracker.com/story/show/{{story.story_id}}" target="_blank">pivotal tracker</a></sup>
+                </th>
+                <td>{{story.actual_java_days|floatformat}}</td>
+                <td>{{story.actual_cs_days|floatformat}}</td>
+            </tr>
+        {%endfor%}
+    </table>
+</body>
+</html>

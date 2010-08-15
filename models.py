@@ -15,6 +15,26 @@ class Story(db.Model):
             self._story_lines = StoryLine.gql('WHERE ANCESTOR IS :story ORDER BY date', story=self).fetch(100, 0)
         return self._story_lines
 
+    def actual_java_days(self):
+        total_java_hours = 0
+
+        for story_line in self.story_lines():
+            if not story_line.is_deleted:
+                total_java_hours += story_line.java_hours
+
+        java_days = float(total_java_hours) / 7
+        return java_days
+
+    def actual_cs_days(self):
+        total_cs_hours = 0
+
+        for story_line in self.story_lines():
+            if not story_line.is_deleted:
+                total_cs_hours += story_line.cs_hours
+
+        cs_days = float(total_cs_hours) / 7
+        return cs_days
+
     @classmethod
     def get_by_story_id(cls, story_id):
         return Story.gql('WHERE story_id = :story_id', story_id=story_id).get()

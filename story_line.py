@@ -64,6 +64,8 @@ class Handler(webapp.RequestHandler):
                                parent=story)
         
         story_line.put()
+        story.last_updated = story_line.date
+        story.put()
         story_lines = story.story_lines()
 
         java_days, cs_days = calculate_actual_days(story_lines)
