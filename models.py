@@ -8,8 +8,12 @@ class Story(db.Model):
     cs_estimate = db.IntegerProperty(default=0, required=True)
     last_updated = db.DateProperty()
 
+    _story_lines = None
+
     def story_lines(self):
-        return StoryLine.gql('WHERE ANCESTOR IS :story ORDER BY date', story=self).fetch(100, 0)
+        if self._story_lines is None:
+            self._story_lines = StoryLine.gql('WHERE ANCESTOR IS :story ORDER BY date', story=self).fetch(100, 0)
+        return self._story_lines
 
     @classmethod
     def get_by_story_id(cls, story_id):
