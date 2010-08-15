@@ -34,6 +34,7 @@ class DeleteHandler(webapp.RequestHandler):
         story = Story.get_by_story_id(story_id)
         story_line = StoryLine.get_by_id(int(line_id), parent=story)
         story_line.is_deleted = True
+        story_line.deleted_by_user = users.get_current_user()
         story_line.put()
 
         self.redirect('/s/' + story_id)
