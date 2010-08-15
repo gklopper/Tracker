@@ -1,10 +1,11 @@
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 from google.appengine.api import users
+from models import Story, StoryLine
+
 import datetime
 import re
 import appengineutils
-from models import Story, StoryLine
 import logging
 
 

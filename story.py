@@ -1,9 +1,10 @@
 from google.appengine.ext import webapp
-
 from google.appengine.ext.webapp import util
-import appengineutils
 from google.appengine.api import users
 from models import Story
+
+import appengineutils
+
 
 class Handler(webapp.RequestHandler):
 
@@ -27,8 +28,7 @@ class Handler(webapp.RequestHandler):
 
 
 def main():
-    application = webapp.WSGIApplication([('/p/(.*)', Handler)],
-                                         debug=True)
+    application = webapp.WSGIApplication([('/p/(.*)', Handler)], debug=True)
     util.run_wsgi_app(application)
 
 

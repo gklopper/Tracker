@@ -1,8 +1,7 @@
 from google.appengine.ext import webapp, db
-
 from google.appengine.ext.webapp import util
+
 import appengineutils
-import models
 
 class Handler(webapp.RequestHandler):
 
