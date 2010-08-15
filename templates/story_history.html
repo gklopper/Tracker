@@ -98,9 +98,13 @@
             </td>
             <td>{{story_line.user.email}}</td>
             <td>
-                <a href="/s/{{story.story_id}}/{{story_line.key.id}}/delete">
-                    <img src="/static/img/trash-can-delete.png" alt="Delete" width="16px"/>
-                </a>
+                {%if story_line.is_deleted%}
+                    &nbsp;
+                {%else%}
+                    <a href="/s/{{story.story_id}}/{{story_line.key.id}}/delete">
+                        <img src="/static/img/trash-can-delete.png" alt="Delete" width="16px"/>
+                    </a>
+                {%endif%}
             </td>
         </tr>
     {% endfor %}
