@@ -14,3 +14,8 @@ indexes:
   properties:
   - name: story_id
   - name: date
+
+- kind: StoryLine
+  ancestor: yes
+  properties:
+  - name: date

@@ -1,5 +1,5 @@
 application: story-track
-version: 1
+version: 2
 runtime: python
 api_version: 1
 
@@ -11,3 +11,14 @@ handlers:
 - url: /p/.*
   script: story.py
   login: required
+
+- url: /s/migrate_parent
+  script: story_line.py
+  login: required
+
+- url: /report
+  script: report.py
+  login: required
+
+- url: /static
+  static_dir : static

@@ -82,19 +82,25 @@
 <div>
     <table>
         <tr>
-            <th>Date</th><th>Java hours</th><th>CS hours</th><th>comment</th>
+            <th>Date</th><th>Java hours</th><th>CS hours</th><th>comment</th><th>Recorded by</th><th>&nbsp;</th>
         </tr>
-    {% for story in stories %}
-        <tr>
-            <td>{{story.date|date:"d M Y"}}</td>
-            <td>{{story.java_hours}}</td>
-            <td>{{story.cs_hours}}</td>
+    {% for story_line in story_lines %}
+        <tr {%if story_line.is_deleted%}style="text-decoration: line-through"{%endif%}>
+            <td>{{story_line.date|date:"d M Y"}}</td>
+            <td>{{story_line.java_hours}}</td>
+            <td>{{story_line.cs_hours}}</td>
             <td>
-                {%if story.comment%}
-                    {{story.comment}}
+                {%if story_line.comment%}
+                    {{story_line.comment}}
                 {%else%}
                     &nbsp;
                 {%endif%}
+            </td>
+            <td>{{story_line.user.email}}</td>
+            <td>
+                <a href="/s/{{story.story_id}}/{{story_line.key.id}}/delete">
+                    <img src="/static/img/trash-can-delete.png" alt="Delete" width="16px"/>
+                </a>
             </td>
         </tr>
     {% endfor %}
