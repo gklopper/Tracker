@@ -22,7 +22,7 @@
 
     <table>
         <tr>
-            <th>Story</th><th>Actual Java</th><th>Actual CS</th>
+            <th>Story</th><th>Actual Java</th><th>Actual CS</th><th>Last updated</th>
         </tr>
 
         {%for story in stories%}
@@ -33,6 +33,7 @@
                 </th>
                 <td>{{story.actual_java_days|floatformat}}</td>
                 <td>{{story.actual_cs_days|floatformat}}</td>
+                <td>{{story.last_updated}}</td>
             </tr>
         {%endfor%}
     </table>
