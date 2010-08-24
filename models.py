@@ -18,12 +18,12 @@ class Story(db.Model):
     def _hour_total(self): return lambda total, hours: total + hours
 
     def actual_java_days(self):
-        return reduce(self._hour_total(),
-                      map(lambda line: float(line.java_hours), self.story_lines())) / 7
+        hours = [float(line.java_hours) for line in self.story_lines()]
+        return reduce(self._hour_total(), hours) / 7
 
     def actual_cs_days(self):
-        return reduce(self._hour_total(),
-                      map(lambda line: float(line.cs_hours), self.story_lines())) / 7
+        hours = [float(line.cs_hours) for line in self.story_lines()]
+        return reduce(self._hour_total(), hours) / 7
 
     @classmethod
     def get_by_story_id(cls, story_id):
