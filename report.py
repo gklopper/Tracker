@@ -1,5 +1,6 @@
 from google.appengine.ext import webapp, db
 from google.appengine.ext.webapp import util
+from models import Story
 
 import appengineutils
 
