@@ -19,11 +19,11 @@ class Story(db.Model):
 
     def actual_java_days(self):
         hours = [float(line.java_hours) for line in self.story_lines()]
-        return reduce(self._hour_total(), hours) / 7
+        return reduce(self._hour_total(), hours, 0) / 7
 
     def actual_cs_days(self):
         hours = [float(line.cs_hours) for line in self.story_lines()]
-        return reduce(self._hour_total(), hours) / 7
+        return reduce(self._hour_total(), hours, 0) / 7
 
     @classmethod
     def get_by_story_id(cls, story_id):
