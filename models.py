@@ -18,12 +18,15 @@ class Story(db.Model):
 
     def _hour_total(self): return lambda total, hours: total + hours
 
+    def _story_lines_not_deleted(self):
+        return filter(lambda s_line: s_line.is_deleted == False, self.story_lines())
+
     def actual_java_days(self):
-        hours = [float(line.java_hours) for line in self.story_lines()]
+        hours = [float(line.java_hours) for line in self._story_lines_not_deleted()]
         return reduce(self._hour_total(), hours, 0) / 7
 
     def actual_cs_days(self):
-        hours = [float(line.cs_hours) for line in self.story_lines()]
+        hours = [float(line.cs_hours) for line in self._story_lines_not_deleted()]
         return reduce(self._hour_total(), hours, 0) / 7
 
     @classmethod

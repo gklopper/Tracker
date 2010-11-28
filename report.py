@@ -8,8 +8,8 @@ import datetime
 class LatestUpdatesReport(webapp.RequestHandler):
 
     def get(self):
-        stories = db.GqlQuery("SELECT * FROM Story ORDER BY last_updated DESC").fetch(1000, 0)    
-        appengineutils.render_template(self.response, 'report.html', {"stories" : stories})
+        stories = db.GqlQuery("SELECT * FROM Story ORDER BY last_updated DESC").fetch(50, 0)    
+        appengineutils.render_template(self.response, 'report.html', {'stories' : stories, 'period' : 'Latest updates'})
 
 class MonthReport(webapp.RequestHandler):
 
@@ -28,8 +28,8 @@ class MonthReport(webapp.RequestHandler):
         stories = db.GqlQuery("""SELECT * FROM Story
                                     WHERE date_accepted >= :this_month AND date_accepted < :next_month
                                     ORDER BY date_accepted ASC""", this_month=this_month, next_month=next_month).fetch(1000, 0)
-        appengineutils.render_template(self.response, 'report.html', {"stories" : stories})
 
+        appengineutils.render_template(self.response, 'report.html', {'stories' : stories, 'period' : this_month.strftime("%B %Y")})
 
 
 def main():
