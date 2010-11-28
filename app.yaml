@@ -20,6 +20,10 @@ handlers:
   script: report.py
   login: required
 
+- url: /report/.*/.*
+  script: report.py
+  login: required
+
 - url: /pivotaltracker
   script: pivotaltracker.py
 
