@@ -21,7 +21,7 @@ handlers:
   login: required
 
 - url: /pivotaltracker
-  script: auto_create.py
+  script: pivotaltracker.py
 
 - url: /static
   static_dir : static

@@ -7,6 +7,7 @@ class Story(db.Model):
     java_estimate = db.IntegerProperty(default=0, required=True)
     cs_estimate = db.IntegerProperty(default=0, required=True)
     last_updated = db.DateProperty()
+    date_accepted = db.DateProperty()
 
     _story_lines = None
 
