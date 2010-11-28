@@ -45,6 +45,25 @@ class TestStory(unittest.TestCase):
                           </stories>
                         </activity>"""
 
+    story_name_change = """<?xml version="1.0" encoding="UTF-8"?>
+                            <activity>
+                              <id type="integer">38096301</id>
+                              <version type="integer">40</version>
+                              <event_type>story_update</event_type>
+                              <occurred_at type="datetime">2010/11/28 10:34:05 UTC</occurred_at>
+                              <author>Grant Klopper</author>
+                              <project_id type="integer">153301</project_id>
+                              <description>Grant Klopper edited &quot;Big test story again&quot;</description>
+                              <stories>
+                                <story>
+                                  <id type="integer">6806885</id>
+                                  <url>http://www.pivotaltracker.com/services/v3/projects/153301/stories/6806885</url>
+                                  <name>Big test story again</name>
+                                  <accepted_at type="datetime">2010/11/28 12:00:00 UTC</accepted_at>
+                                </story>
+                              </stories>
+                            </activity>"""
+
     def test_should_parse_new_story(self):
         event = EventParser().parse(self.new_story_xml)
         self.assertTrue(event.is_create_story_event())
@@ -60,3 +79,10 @@ class TestStory(unittest.TestCase):
         self.assertFalse(event.is_create_story_event())
         self.assertEqual(event.story_id, '6799253')
         self.assertEqual(event.accepted_date, expected_date)
+
+    def test_should_parse_name_change(self):
+        event = EventParser().parse(self.story_name_change)
+        self.assertFalse(event.is_accept_story_event())
+        self.assertTrue(event.is_name_update_event())
+        self.assertEqual(event.story_id, '6806885')
+        self.assertEqual(event.story_title, 'Big test story again')
