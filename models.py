@@ -1,5 +1,13 @@
 from google.appengine.ext import db
 
+class Project(db.Model):
+    project_id = db.StringProperty(required=True, default='CHANGEME')
+    api_token = db.StringProperty(required=True, default='CHANGEME')
+
+    @classmethod
+    def get(cls):
+        return Project.get_or_insert('current_project', project_id='changeme')
+
 class Story(db.Model):
     story_id = db.StringProperty(required=True)
     name = db.StringProperty(required=True)

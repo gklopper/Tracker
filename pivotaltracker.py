@@ -4,6 +4,7 @@ from xml.dom import minidom
 from models import Story
 import logging
 from event_parser import EventParser
+import urllib2
 
 
 class Handler(webapp.RequestHandler):
@@ -12,6 +13,9 @@ class Handler(webapp.RequestHandler):
         logging.info('Creating story')
         story = Story(story_id=event.story_id, name=event.story_title, )
         story.put()
+
+        #post a comment back to pivotal tracker
+
 
     def _accept_story(self, event):
         logging.info('Accepting story: ' + event.story_id)

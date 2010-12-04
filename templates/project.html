@@ -1,0 +1,17 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Project admin</title>
+</head>
+<body>
+    <form method="POST" action="/project">
+        <label for='project-id'>Project id: </label><input size="30" id="project-id" name="project-id" type="text" value="{{ project.project_id }}"/>
+        </br>
+        <label for='api-token'>Api token: </label><input size="30" id="api-token" name="api-token" type="text" value="{{ project.api_token }}"/>
+        </br>
+        <input type="submit" value="Save"/>
+    </form>
+<p>You can create a new token <a href="https://www.pivotaltracker.com/profile">here</a> (right at bottom of page)</p>
+</body>
+</html>
