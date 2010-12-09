@@ -52,3 +52,6 @@ class StoryLine(db.Model):
     is_deleted = db.BooleanProperty(required=True, default=False)
     deleted_by_user = db.UserProperty()
 
+    def get_story(self):
+        return Story.get_by_story_id(self.story_id)
+
