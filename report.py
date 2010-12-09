@@ -4,6 +4,7 @@ from models import Story
 
 import appengineutils
 import datetime
+import logging
 
 class LatestUpdatesReport(webapp.RequestHandler):
 
@@ -15,15 +16,23 @@ class MonthReport(webapp.RequestHandler):
 
     def get(self, _year, _month):
 
+        logging.info('Running report for: ' + _year + '/' + _month)
+
         year = int(_year)
         month = int(_month)
 
         next_month = month + 1
-        if (next_month == 13):
-            next_month = 1
 
         this_month = datetime.date(year, month, 1)
+
+        if (next_month == 13):
+            next_month = 1
+            year = year + 1
+
         next_month = datetime.date(year, next_month, 1)
+
+        logging.info('this_month: ' + str(this_month))
+        logging.info('next_month: ' + str(next_month))
 
         stories = db.GqlQuery("""SELECT * FROM Story
                                     WHERE date_accepted >= :this_month AND date_accepted < :next_month

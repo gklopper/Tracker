@@ -14,7 +14,7 @@ class Handler(webapp.RequestHandler):
 
     def _create_new_story(self, event):
         logging.info('Creating story')
-        story = Story(story_id=event.story_id, name=event.story_title, )
+        story = Story(story_id=event.story_id, name=event.story_title)
         story.put()
 
         project = Project.get()
